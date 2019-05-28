@@ -12,11 +12,22 @@ import android.widget.Toast;
 
 import com.wallet.netdollar.Api.RetrofitClient;
 import com.wallet.netdollar.R;
+import com.wallet.netdollar.Transactions.Account;
 import com.wallet.netdollar.models.LoginResponse;
+
+import org.stellar.sdk.CreateAccountOperation;
+import org.stellar.sdk.KeyPair;
+import org.stellar.sdk.Server;
+import org.stellar.sdk.responses.AccountResponse;
+import org.stellar.sdk.responses.Page;
+import org.stellar.sdk.xdr.StellarValue;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import shadow.okhttp3.OkHttpClient;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -77,6 +88,7 @@ private Button btn;
                         //prgDialog.hide();
                         if(respons.equals("success"))
                         {
+
                             SharedPrefs.saveShared(LoginActivity.this,"login","false");
                            // SharedPreferences sharedUser=getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
                            // Toast.makeText(LoginActivity.this,respons,Toast.LENGTH_LONG).show();

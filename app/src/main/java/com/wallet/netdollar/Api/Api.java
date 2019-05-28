@@ -1,10 +1,13 @@
 package com.wallet.netdollar.Api;
 
 
+import com.wallet.netdollar.models.BaseModel;
+import com.wallet.netdollar.models.RegisterUser;
 import com.wallet.netdollar.models.LoginResponse;
 import com.wallet.netdollar.models.TransactionsResponse;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,6 +25,11 @@ public interface Api {
             @Field("username") String phone,
             @Field("walletid") String walletid
     );
+
+
+    @POST("create")
+    Call<BaseModel> register(@Body RegisterUser registerUser);
+
 
     @FormUrlEncoded
     @GET("transactions")

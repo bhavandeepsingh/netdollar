@@ -69,6 +69,7 @@
                         android:hint="@string/login_phone"
                         android:layout_margin="10dp"
                         android:padding="15dp"
+                        android:text="1111111111"
                         android:background="@drawable/round_border"
                         android:textSize="13dp" />
 
@@ -78,6 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
+                        android:text="Demo1234"
                         android:hint="@string/login_password"
                         android:background="@drawable/round_border"
                         android:layout_margin="10dp"
