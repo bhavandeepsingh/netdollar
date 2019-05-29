@@ -2,21 +2,23 @@ package com.wallet.netdollar.models;
 
 import com.google.gson.annotations.SerializedName;
 
-import retrofit2.http.Body;
-import retrofit2.http.Field;
+import java.io.Serializable;
 
-public class RegisterUser {
+
+public class RegisterUser implements Serializable {
 
     @SerializedName("username") String username;
     @SerializedName("password") String password;
-    @SerializedName("accountId") String accountId;
-    @SerializedName("publicKey") String publicKey;
+//    @SerializedName("accountId") String accountId;
+    @SerializedName("walletId") String walletId;
+    @SerializedName("publicKey") byte[] publicKey;
     @SerializedName("keychainData") String keychainData;
-    @SerializedName("mainData") String mainData;
+    @SerializedName("mainData") String mainData = "mainData";
     @SerializedName("phoneAsLogin") boolean phoneAsLogin;
     @SerializedName("kdfParams") KdfParams kdfParams;
+    @SerializedName("salt") byte[] salt;
 
-    class KdfParams {
+    class KdfParams implements Serializable {
 
         @SerializedName("algorithm")
         String algorithm = "scrypt";
@@ -112,19 +114,19 @@ public class RegisterUser {
         this.password = password;
     }
 
-    public String getAccountId() {
-        return accountId;
-    }
+//    public String getAccountId() {
+//        return accountId;
+//    }
+//
+//    public void setAccountId(String accountId) {
+//        this.accountId = accountId;
+//    }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
-    }
-
-    public String getPublicKey() {
+    public byte[] getPublicKey() {
         return publicKey;
     }
 
-    public void setPublicKey(String publicKey) {
+    public void setPublicKey(byte[] publicKey) {
         this.publicKey = publicKey;
     }
 
@@ -153,10 +155,27 @@ public class RegisterUser {
     }
 
     public KdfParams getKdfParams() {
-        return kdfParams;
+        return new KdfParams();
     }
 
     public void setKdfParams(KdfParams kdfParams) {
         this.kdfParams = kdfParams;
     }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+
+    public String getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(String walletId) {
+        this.walletId = walletId;
+    }
+
 }

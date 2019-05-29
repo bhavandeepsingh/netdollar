@@ -20,14 +20,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.Splash_screenActivity">
+
+        </activity>
+        <activity android:name=".Activity.SignupActivity"
+            android:label="@string/titre_newcompte">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".Activity.SignupActivity"
-            android:label="@string/titre_newcompte"/>
 
         <activity android:name=".Activity.ScannerActivity"/>
         <activity
