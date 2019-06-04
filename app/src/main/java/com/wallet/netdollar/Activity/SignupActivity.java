@@ -20,10 +20,16 @@ import org.stellar.sdk.Account;
 import org.stellar.sdk.CreateAccountOperation;
 import org.stellar.sdk.CreateAccountOperation.Builder;
 import org.stellar.sdk.KeyPair;
+import org.stellar.sdk.Memo;
+import org.stellar.sdk.Network;
+import org.stellar.sdk.Operation;
 import org.stellar.sdk.Server;
 import org.stellar.sdk.Transaction;
 import org.stellar.sdk.requests.EventListener;
 import org.stellar.sdk.responses.AccountResponse;
+import org.stellar.sdk.responses.Page;
+import org.stellar.sdk.responses.SubmitTransactionResponse;
+import org.stellar.sdk.responses.operations.OperationResponse;
 
 import java.io.IOException;
 import java.security.Key;
@@ -90,18 +96,39 @@ public class SignupActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             KeyPair keyPair = KeyPair.random();
+            KeyPair source = KeyPair.fromSecretSeed("SDAOO3ERXYY3KANVT5FLNCKKTBKDAVEBN7R3QQFLM2JLVCVNQ4KQA4RC");
 
             try {
+                Network.useTestNetwork();
                 final Server server = new Server("http://blockchain.netdollar.us");
-
+                AccountResponse accountResponse = server.accounts().account(source);
+                Log.d("here...", "there");
 //                server.accounts().stream(new EventListener<AccountResponse>() {
 //                    @Override
 //                    public void onEvent(AccountResponse accountResponse) {
 //                        Log.d("EVENT", accountResponse.getInflationDestination());
 //                    }
 //                });
-//            server.operations().forAccount(keyPair).
-                AccountResponse accountResponse = server.accounts().cursor("0.9855420897486635").account(keyPair);
+                final  Transaction.Builder transactionBuilder = new Transaction.Builder(accountResponse);
+                final CreateAccountOperation createAccountOperation =
+                        new CreateAccountOperation.Builder(keyPair, Integer.toString(1)).
+                                setSourceAccount(source).build();
+
+                transactionBuilder.addOperation(createAccountOperation);
+                transactionBuilder.addMemo(Memo.text("ExampleAccount"));
+                transactionBuilder.setTimeout(Transaction.Builder.TIMEOUT_INFINITE);
+                final Transaction createAccountTransaction = transactionBuilder.build();
+
+                //Sign this transaction with the new account, and then submit it to the stellar server.
+                createAccountTransaction.sign(source);
+
+                System.out.println("Creating account...");
+                final SubmitTransactionResponse createAccountResponse = server.submitTransaction(createAccountTransaction);
+
+                Log.d("here...", "asdQWE"+ createAccountResponse.getHash());
+
+
+
                 Log.d("ASD", "here");
             } catch (IOException e) {
                 e.printStackTrace();
